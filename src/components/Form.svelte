@@ -31,7 +31,7 @@
     </label>
     <button
       type="submit"
-      class="matter-button-outlined"
+      class="matter-button-contained"
       disabled={!username.length}
     >VIEW PROFILE</button>
   </form>

@@ -1,9 +1,11 @@
 <script>
+  import { onMount } from 'svelte'
   import Form from './components/Form.svelte'
+  import Profile from './components/Profile.svelte'
 
   // STATE
-  let showProfilePage = false
   let username = ''
+  let showProfilePage = false
 
   // $: console.log('username', username)
 
@@ -11,6 +13,12 @@
   function handleFormSubmit () {
     showProfilePage = true
   }
+
+  //! Just for development !
+  // onMount(() => {
+  //   username = 'iagobruno'
+  //   handleFormSubmit()
+  // })
 </script>
 
 {#if !showProfilePage}
@@ -19,5 +27,5 @@
     on:submit={handleFormSubmit}
   />
 {:else}
-  <div class="page page--profile">Perfil</div>
+  <Profile {username} />
 {/if}
