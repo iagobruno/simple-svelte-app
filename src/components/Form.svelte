@@ -5,7 +5,7 @@
 </script>
 
 <div class="page page--form">
-  <img class="logo" src="https://svelte.dev/favicon.png" alt="Svelte Logo">
+  <img class="logo" src="/icons/svelte.svg" alt="Svelte Logo">
   <h1 class="title">Hello World!</h1>
   <p class="description">Enter a GitHub username to see a profile preview.</p>
 
@@ -36,6 +36,8 @@
   }
   .logo {
     display: block;
+    width: 160px;
+    height: 160px;
   }
   .title {
     font-size: 38px;

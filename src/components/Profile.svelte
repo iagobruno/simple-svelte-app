@@ -83,7 +83,7 @@
     height: 100%;
   }
   .gh-badge {
-    background: url(https://github.githubassets.com/pinned-octocat.svg) center no-repeat;
+    background: url(/icons/github.svg) center no-repeat;
     background-color: white;
     background-size: cover;
     border: 1.6px solid white;
