@@ -1,4 +1,7 @@
 <script>
+  import { link } from 'svelte-routing'
+  import StarsCounter from './StarsCounter.svelte'
+
   // PROPS
   export let username
 
@@ -15,10 +18,8 @@
     {#each repos as repo (repo.id)}
       <li class="repos-list__item">
         <img class="repos-list__item__icon" src="/icons/{repo.fork ? 'fork' : 'repo'}.svg" alt="">
-        <a href={repo.html_url}>{repo.name}</a>
-        <span class="repos-list__item__stars">
-          <img src="/icons/star.svg" alt=""> {repo.stargazers_count}
-        </span>
+        <a href="/view/{repo.full_name}" use:link>{repo.name}</a>
+        <StarsCounter number={repo.stargazers_count} />
       </li>
     {/each}
   </ul>
@@ -59,16 +60,7 @@
     margin-right: 10px;
     margin-top: 4px;
   }
-  .repos-list__item__stars {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    opacity: .7;
-  }
-  .repos-list__item__stars > img {
-    margin-right: 3px;
-    margin-top: 2px;
-    height: 14px;
-    width: 14px;
+  .repos-list__item a {
+    margin-right: auto;
   }
 </style>

@@ -1,11 +1,19 @@
 <script>
   import ReposList from '../components/ReposList.svelte'
+  import Error from './Error.svelte'
 
   // PROPS
-  export let username
+  export let username // Received from svelte-routing
 
   const userRequest = fetch(`https://api.github.com/users/${username}`)
-    .then(res => res.json())
+    .then(res => {
+      if (res.status !== 200) {
+        return Promise.reject()
+      }
+
+      return res.json()
+    })
+
 </script>
 
 {#await userRequest}
@@ -49,16 +57,11 @@
     >VIEW FULL PROFILE ON GITHUB</a>
   </div>
 {:catch error}
-  <div class="page page--error">🚨 ERROR!<br>See the console.</div>
+  <Error message="Could not fetch the user. See the console for more details" />
   {@debug error}
 {/await}
 
 <style>
-  .page--error {
-    font-size: 18px;
-    color: red;
-    text-align: center;
-  }
   .page--loading progress {
     width: 60px;
     height: 60px;
@@ -115,9 +118,9 @@
     flex-direction: column;
     align-items: center;
   }
-  .infos-row__col > span {
-    /* font-size: 14px; */
-  }
+  /* .infos-row__col > span {
+    font-size: 14px;
+  } */
   .bio {
     text-align: center;
     margin: 0 0 24px;
