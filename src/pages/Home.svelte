@@ -1,12 +1,32 @@
 <script>
   import { navigate  } from 'svelte-routing'
+  import debounce from 'lodash/debounce'
+  import octokit from '../common/octokit'
 
   // PROPS
   export let username = ''
 
+  // STATES
+  let searchResults = []
+
   function handleSubmit () {
     navigate(`/view/${username}`)
   }
+
+  const debounceSearch = debounce(function searchUsers() {
+    if (!username) {
+      searchResults = []
+      return
+    }
+
+    octokit.search.users({
+      q: username,
+      per_page: 10
+    })
+    .then(res => {
+      searchResults = res.data.items
+    })
+  }, 500)
 </script>
 
 <svelte:head>
@@ -22,14 +42,22 @@
     <label class="matter-textfield-outlined">
       <input
         type="text"
+        name="gh-username"
         bind:value={username}
+        on:input={debounceSearch}
         placeholder=" "
+        list="usernames"
         minlength="1"
         maxlength="20"
         required
       >
       <span>GitHub username...</span>
     </label>
+    <datalist id="usernames">
+      {#each searchResults as item (item.login)}
+        <option value={item.login}>
+      {/each}
+    </datalist>
     <button
       type="submit"
       class="matter-button-contained"
