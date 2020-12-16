@@ -1,14 +1,6 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-
   // PROPS
   export let username = ''
-
-  const dispatch = createEventDispatcher()
-
-  async function handleSubmit () {
-    dispatch('submit')
-  }
 
 </script>
 
@@ -17,7 +9,7 @@
   <h1 class="title">Hello World!</h1>
   <p class="description">Enter a GitHub username to see a profile preview.</p>
 
-  <form on:submit|preventDefault={handleSubmit}>
+  <form on:submit|preventDefault>
     <label class="matter-textfield-outlined">
       <input
         type="text"
@@ -40,6 +32,7 @@
 <style>
   .page--form {
     text-align: center;
+    max-width: 460px;
   }
   .logo {
     display: block;

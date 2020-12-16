@@ -13,12 +13,6 @@
   function handleFormSubmit () {
     showProfilePage = true
   }
-
-  //! Just for development !
-  // onMount(() => {
-  //   username = 'iagobruno'
-  //   handleFormSubmit()
-  // })
 </script>
 
 {#if !showProfilePage}

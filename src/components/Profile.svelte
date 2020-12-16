@@ -1,14 +1,15 @@
 <script>
+  import ReposList from './ReposList.svelte'
+
   // PROPS
   export let username
 
-  // STATE
-  let userInfos = fetch(`https://api.github.com/users/${username}`)
+  const userRequest = fetch(`https://api.github.com/users/${username}`)
     .then(res => res.json())
 
 </script>
 
-{#await userInfos}
+{#await userRequest}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
   </div>
@@ -39,6 +40,8 @@
 
     <p class="bio">{user.bio}</p>
 
+    <ReposList {username} />
+
     <a
       href="https://github.com/{user.login}"
       class="matter-button-outlined"
@@ -61,6 +64,10 @@
     width: 60px;
     height: 60px;
   }
+
+  .page-profile {
+    padding: 60px 20px;
+  }
   .avatar__wrapper {
     --size: 124px;
     height: var(--size);
@@ -81,11 +88,11 @@
     background-size: cover;
     border: 1.6px solid white;
     border-radius: 50%;
-    height: 24px;
-    width: 24px;
+    height: 28px;
+    width: 28px;
     position: absolute;
-    bottom: 2px;
-    right: 6px;
+    bottom: 3px;
+    right: 7px;
   }
   .userid {
     opacity: .6;
@@ -114,10 +121,10 @@
   }
   .bio {
     text-align: center;
-    margin: 0;
+    margin: 0 0 24px;
   }
   a.matter-button-outlined {
     text-decoration: none;
-    margin-top: 34px;
+    margin: 34px 0 0;
   }
 </style>
