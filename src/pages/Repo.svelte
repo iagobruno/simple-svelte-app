@@ -105,7 +105,7 @@
     margin-right: 6px;
   }
   .repo__name {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     margin-bottom: 8px;
   }
@@ -138,13 +138,15 @@
     margin-top: 16px;
   }
   .repo__readme {
-    padding: 16px 0px;
+    padding: 20px 0px;
     font-size: 16px;
+    line-height: normal;
+    max-width: 100%;
   }
   @media (max-width: 600px) {
     .repo__readme {
+      padding: 20px 20px;
       font-size: 14px;
-      padding: 16px 20px;
     }
     .repo__header {
       padding: 24px 22px;

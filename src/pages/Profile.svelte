@@ -13,7 +13,12 @@
 
       return res.json()
     })
-
+    .then(user => {
+      return {
+        ...user,
+        company: user.company?.replace(/\@(\w+)/gi, '<a href="https://github.com/$1" target="_blank">$1</a>')
+      }
+    })
 </script>
 
 {#await userRequest}
@@ -27,8 +32,12 @@
       <img class="avatar" src="{user.avatar_url}" alt="">
       <div class="gh-badge"></div>
     </div>
-    <div class="userid">#{user.id}</div>
+    <div class="username">{user.login}</div>
     <h2 class="name">{user.name}</h2>
+
+    {#if user.company}
+      <div class="company">Works on {@html user.company}</div>
+    {/if}
 
     <div class="infos-row">
       <div class="infos-row__col">
@@ -45,7 +54,12 @@
       </div>
     </div>
 
-    <p class="bio">{user.bio}</p>
+    {#if user.bio}
+      <p class="bio">{user.bio}</p>
+    {/if}
+    {#if user.blog}
+      <a class="website" href={user.blog} target="_blank" rel="noopener noreferrer">{user.blog}</a>
+    {/if}
 
     <ReposList {username} />
 
@@ -77,7 +91,7 @@
     position: relative;
     margin-bottom: 10px;
   }
-  img.avatar {
+  .avatar {
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.1);
     display: block;
@@ -96,14 +110,26 @@
     bottom: 3px;
     right: 7px;
   }
-  .userid {
-    opacity: .6;
-    font-size: 14px;
+  .username {
+    opacity: .7;
+    font-size: 15px;
   }
-  h2.name {
+  .name {
     font-size: 28px;
     font-weight: bold;
     margin: -2px 0 0;
+  }
+  .company {
+    margin: 8px 0 2px;
+  }
+  .company::before {
+    background: url(/icons/org.svg) no-repeat center;
+    background-size: contain;
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
   }
   .infos-row {
     display: flex;
@@ -124,6 +150,21 @@
   .bio {
     text-align: center;
     margin: 0 0 24px;
+  }
+  .website {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin: -10px 0 24px;
+  }
+  .website::before {
+    background: url(/icons/link.svg) no-repeat center;
+    background-size: contain;
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
   }
   a.matter-button-outlined {
     text-decoration: none;
