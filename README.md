@@ -1,6 +1,6 @@
 # simple-svelte-app
 
-[![Online Demo](https://img.shields.io/badge/Online-Demo-brightgreen.svg)](https://iagobruno.github.io/simple-svelte-app/)
+[![Online Demo](https://img.shields.io/badge/Online-Demo-brightgreen.svg)](https://simple-svelte-app.vercel.app/)
 
 |      |      |      |
 | ---- | ---- | ---- |
@@ -30,7 +30,3 @@ To create an optimised version of the app:
 ```
 
 You can run the newly built app with npm run start. This uses sirv, which is included in your package.json's dependencies so that the app will work when you deploy to platforms like Heroku.
-
-## Deploying to GitHub Pages
-
-TODO

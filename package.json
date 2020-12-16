@@ -3,15 +3,13 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "del-cli public/build && rollup -c",
-    "start": "sirv public --single",
-    "deploy": "yarn run build && gh-pages -d public"
+    "start": "sirv public --single"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/marked": "^1.2.1",
     "del-cli": "^3.0.1",
-    "gh-pages": "^3.1.0",
     "marked": "^1.2.7",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.0.0",
@@ -22,7 +20,6 @@
     "svelte-routing": "^1.4.2"
   },
   "dependencies": {
-    "@types/base64-js": "^1.3.0",
     "sirv-cli": "^1.0.0"
   }
 }
