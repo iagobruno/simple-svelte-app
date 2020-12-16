@@ -9,6 +9,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Svelte app</title>
+</svelte:head>
+
 <div class="page page--form">
   <img class="logo" src="/icons/svelte.svg" alt="Svelte Logo">
   <h1 class="title">Hello World!</h1>

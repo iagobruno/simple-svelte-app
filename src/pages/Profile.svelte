@@ -21,6 +21,10 @@
     })
 </script>
 
+<svelte:head>
+  <title>{username} - Svelte app</title>
+</svelte:head>
+
 {#await userRequest}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
