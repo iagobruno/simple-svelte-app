@@ -1,5 +1,4 @@
 <script>
-  import { afterUpdate } from 'svelte'
   import { link } from 'svelte-routing'
   import StarsCounter from '../components/StarsCounter.svelte'
   import ForksCounter from '../components/ForksCounter.svelte'
@@ -19,7 +18,9 @@
   let repo = null
   let readme = null
 
-  afterUpdate(async () => {
+  $: {
+    isLoading = true
+
     const repoReq = octokit.repos.get({
       owner: username,
       repo: reponame,
@@ -40,14 +41,17 @@
         readme = marked(markdown)
       })
 
-    await Promise.all([repoReq, readmeReq])
-      .catch(err => {
-        error = err
-      })
+    Promise.all([
+      repoReq,
+      readmeReq,
+    ])
       .finally(() => {
         isLoading = false
       })
-  })
+      .catch(err => {
+        error = err
+      })
+  }
 </script>
 
 <svelte:head>

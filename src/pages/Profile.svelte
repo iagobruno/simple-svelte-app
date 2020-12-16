@@ -1,5 +1,4 @@
 <script>
-  import { afterUpdate } from 'svelte'
   import ReposList from '../components/ReposList.svelte'
   import Error from './Error.svelte'
   import octokit from '../common/octokit.js'
@@ -12,8 +11,10 @@
   let error = null
   let user = null
 
-  afterUpdate(async () => {
-    await octokit.users.getByUsername({ username })
+  $: {
+    isLoading = true
+
+    octokit.users.getByUsername({ username })
       .then(res => {
         const { data } = res
         user = Object.assign(data, {
@@ -26,7 +27,7 @@
       .finally(() => {
         isLoading = false
       })
-  })
+  }
 </script>
 
 <svelte:head>

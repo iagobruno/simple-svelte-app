@@ -1,5 +1,4 @@
 <script>
-  import { afterUpdate } from 'svelte'
   import { link } from 'svelte-routing'
   import StarsCounter from './StarsCounter.svelte'
   import octokit from '../common/octokit'
@@ -12,8 +11,8 @@
   let error = null
   let repos = null
 
-  afterUpdate(async () => {
-    await octokit.repos.listForUser({
+  $: {
+    octokit.repos.listForUser({
       username,
       per_page: 100,
       type: 'all',
@@ -28,7 +27,7 @@
       .finally(() => {
         isLoading = false
       })
-  })
+  }
 </script>
 
 {#if isLoading}
