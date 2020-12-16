@@ -71,6 +71,11 @@
         {repo.owner.login}
       </a>
       <a class="repo__name" href={repo.html_url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
+      {#if repo.fork}
+        <div class="repo_forkinfo">
+          forked from <a href="/view/{repo.parent.full_name}/" use:link>{repo.parent.full_name}</a>
+        </div>
+      {/if}
       {#if repo.description}
         <p class="repo__description">{repo.description}</p>
       {/if}
@@ -119,7 +124,7 @@
   .repo__owner {
     display: flex;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .repo__owner > img {
     height: 20px;
@@ -131,6 +136,19 @@
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 8px;
+  }
+  .repo_forkinfo {
+    opacity: .9;
+    margin: -6px 0 8px;
+  }
+  .repo_forkinfo::before {
+    background: url(/icons/fork.svg) no-repeat center;
+    background-size: contain;
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
   }
   .repo__description {
     font-size: 15px;

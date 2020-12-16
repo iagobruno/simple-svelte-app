@@ -42,7 +42,7 @@
     {#each repos as repo (repo.id)}
       <li class="repos-list__item">
         <img class="repos-list__item__icon" src="/icons/{repo.fork ? 'fork' : 'repo'}.svg" alt="">
-        <a href="/view/{repo.full_name}" use:link>{repo.name}</a>
+        <a href="/view/{username}/{repo.name}" use:link>{repo.name}</a>
         <StarsCounter number={repo.stargazers_count} />
       </li>
     {/each}
