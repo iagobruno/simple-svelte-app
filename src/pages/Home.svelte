@@ -1,7 +1,12 @@
 <script>
+  import { navigate  } from 'svelte-routing'
+
   // PROPS
   export let username = ''
 
+  function handleSubmit () {
+    navigate(`/view/${username}`)
+  }
 </script>
 
 <div class="page page--form">
@@ -9,7 +14,7 @@
   <h1 class="title">Hello World!</h1>
   <p class="description">Enter a GitHub username to see a profile preview.</p>
 
-  <form on:submit|preventDefault>
+  <form on:submit|preventDefault={handleSubmit}>
     <label class="matter-textfield-outlined">
       <input
         type="text"

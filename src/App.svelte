@@ -1,25 +1,11 @@
 <script>
-  import { onMount } from 'svelte'
-  import Form from './components/Form.svelte'
-  import Profile from './components/Profile.svelte'
+  import { Router, Route } from 'svelte-routing'
 
-  // STATE
-  let username = ''
-  let showProfilePage = false
-
-  // $: console.log('username', username)
-
-  // METHODS
-  function handleFormSubmit () {
-    showProfilePage = true
-  }
+  import Home from './pages/Home.svelte'
+  import Profile from './pages/Profile.svelte'
 </script>
 
-{#if !showProfilePage}
-  <Form
-    bind:username
-    on:submit={handleFormSubmit}
-  />
-{:else}
-  <Profile {username} />
-{/if}
+<Router>
+  <Route path="/view/:username" component={Profile} />
+  <Route path="/" component={Home} />
+</Router>

@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "del-cli public/build && rollup -c",
-    "start": "sirv public",
+    "start": "sirv public --single",
     "deploy": "yarn run build && gh-pages -d public"
   },
   "devDependencies": {
@@ -16,7 +16,8 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "svelte-routing": "^1.4.2"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0"

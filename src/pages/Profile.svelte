@@ -1,12 +1,11 @@
 <script>
-  import ReposList from './ReposList.svelte'
+  import ReposList from '../components/ReposList.svelte'
 
   // PROPS
   export let username
 
   const userRequest = fetch(`https://api.github.com/users/${username}`)
     .then(res => res.json())
-
 </script>
 
 {#await userRequest}
