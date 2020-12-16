@@ -1,42 +1,52 @@
 <script>
+  import { afterUpdate } from 'svelte'
   import ReposList from '../components/ReposList.svelte'
   import Error from './Error.svelte'
+  import octokit from '../common/octokit.js'
 
   // PROPS
   export let username // Received from svelte-routing
 
-  const userRequest = fetch(`https://api.github.com/users/${username}`)
-    .then(res => {
-      if (res.status !== 200) {
-        return Promise.reject()
-      }
+  // STATES
+  let isLoading = true
+  let error = null
+  let user = null
 
-      return res.json()
-    })
-    .then(user => {
-      return {
-        ...user,
-        company: user.company?.replace(/\@(\w+)/gi, '<a href="https://github.com/$1" target="_blank">$1</a>')
-      }
-    })
+  afterUpdate(async () => {
+    await octokit.users.getByUsername({ username })
+      .then(res => {
+        const { data } = res
+        user = Object.assign(data, {
+          company: data.company?.replace(/\@(\w+)/gi, '<a href="https://github.com/$1" target="_blank">$1</a>')
+        })
+      })
+      .catch(err => {
+        error = err
+      })
+      .finally(() => {
+        isLoading = false
+      })
+  })
 </script>
 
 <svelte:head>
   <title>{username} - Svelte app</title>
 </svelte:head>
 
-{#await userRequest}
+{#if isLoading}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
   </div>
-{:then user}
-  <!-- {@debug user} -->
+{:else if error}
+  <Error message="Could not fetch the user. See the console for more details" />
+  {@debug error}
+{:else}
   <div class="page page-profile">
     <div class="avatar__wrapper">
       <img class="avatar" src="{user.avatar_url}" alt="">
       <div class="gh-badge"></div>
     </div>
-    <div class="username">{user.login}</div>
+    <div class="username">@{user.login}</div>
     <h2 class="name">{user.name}</h2>
 
     {#if user.company}
@@ -74,10 +84,7 @@
       rel="noopener noreferrer"
     >VIEW FULL PROFILE ON GITHUB</a>
   </div>
-{:catch error}
-  <Error message="Could not fetch the user. See the console for more details" />
-  {@debug error}
-{/await}
+{/if}
 
 <style>
   .page--loading progress {

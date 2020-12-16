@@ -1,4 +1,5 @@
 <script>
+  import { afterUpdate } from 'svelte'
   import { link } from 'svelte-routing'
   import StarsCounter from '../components/StarsCounter.svelte'
   import ForksCounter from '../components/ForksCounter.svelte'
@@ -6,26 +7,47 @@
   import PullsCounter from '../components/PullsCounter.svelte'
   import Error from './Error.svelte'
   import marked from 'marked'
+  import octokit from '../common/octokit'
 
   // PROPS
   export let reponame // Received from svelte-routing
   export let username // Received from svelte-routing
 
-  const repoRequest = fetch(`https://api.github.com/repos/${username}/${reponame}`)
-    .then(res => {
-      if (res.status !== 200) {
-        return Promise.reject()
-      }
+  // STATES
+  let isLoading = true
+  let error = null
+  let repo = null
+  let readme = null
 
-      return res.json()
+  afterUpdate(async () => {
+    const repoReq = octokit.repos.get({
+      owner: username,
+      repo: reponame,
     })
-  const readme = fetch(`https://api.github.com/repos/${username}/${reponame}/readme`, {
-    headers: {
-      'accept': 'application/vnd.github.VERSION.raw'
-    }
+      .then(res => {
+        repo = res.data
+      })
+
+    const readmeReq = octokit.repos.getReadme({
+      owner: username,
+      repo: reponame,
+      headers: {
+        'accept': 'application/vnd.github.VERSION.raw'
+      }
+    })
+      .then(res => {
+        const markdown = res.data
+        readme = marked(markdown)
+      })
+
+    await Promise.all([repoReq, readmeReq])
+      .catch(err => {
+        error = err
+      })
+      .finally(() => {
+        isLoading = false
+      })
   })
-    .then(res => res.text())
-    .then(markdown => marked(markdown))
 </script>
 
 <svelte:head>
@@ -34,11 +56,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
 </svelte:head>
 
-{#await repoRequest}
+{#if isLoading}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
   </div>
-{:then repo}
+{:else if error}
+  <Error message="Could not fetch this repo. See the console for more details" />
+  {@debug error}
+{:else}
   <div class="page page--repo">
     <div class="repo__header">
       <a class="repo__owner" href="/view/{repo.owner.login}" use:link>
@@ -74,10 +99,7 @@
       </div>
     {/await}
   </div>
-{:catch error}
-  <Error message="Could not fetch this repo. See the console for more details" />
-  {@debug error}
-{/await}
+{/if}
 
 <style>
   .page--repo {

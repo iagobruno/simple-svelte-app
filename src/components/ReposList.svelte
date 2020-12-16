@@ -1,17 +1,41 @@
 <script>
+  import { afterUpdate } from 'svelte'
   import { link } from 'svelte-routing'
   import StarsCounter from './StarsCounter.svelte'
+  import octokit from '../common/octokit'
 
   // PROPS
   export let username
 
-  const reposRequest = fetch(`https://api.github.com/users/${username}/repos?type=all&sort=updated&per_page=100`)
-    .then(res => res.json())
+  // STATES
+  let isLoading = true
+  let error = null
+  let repos = null
+
+  afterUpdate(async () => {
+    await octokit.repos.listForUser({
+      username,
+      per_page: 100,
+      type: 'all',
+      sort: 'updated',
+    })
+      .then(res => {
+        repos = res.data
+      })
+      .catch(err => {
+        error = err
+      })
+      .finally(() => {
+        isLoading = false
+      })
+  })
 </script>
 
-{#await reposRequest}
+{#if isLoading}
   <progress class="loading-repos matter-progress-linear"></progress>
-{:then repos}
+{:else if error}
+  {@debug error}
+{:else}
   <strong class="repos-list__title">REPOS:</strong>
 
   <ul class="repos-list">
@@ -23,7 +47,7 @@
       </li>
     {/each}
   </ul>
-{/await}
+{/if}
 
 <style>
   .loading-repos {

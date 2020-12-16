@@ -20,6 +20,7 @@
     "svelte-routing": "^1.4.2"
   },
   "dependencies": {
+    "@octokit/rest": "^18.0.12",
     "sirv-cli": "^1.0.0"
   }
 }
