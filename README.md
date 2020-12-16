@@ -2,7 +2,9 @@
 
 [![Online Demo](https://img.shields.io/badge/Online-Demo-brightgreen.svg)](https://iagobruno.github.io/simple-svelte-app/)
 
-> Colocar prints do app aqui.
+|      |      |      |
+| ---- | ---- | ---- |
+| ![](/public/images/home.png) | ![](/public/images/profile.png) | ![](/public/images/repo.png) |
 
 ## Getting started
 
