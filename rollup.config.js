@@ -34,7 +34,7 @@ export default {
     dir: 'public/build',
     format: 'es',
     name: 'app',
-    sourcemap: isProduction,
+    sourcemap: true,
   },
   plugins: [
     svelte({
