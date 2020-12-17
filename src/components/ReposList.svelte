@@ -7,34 +7,22 @@
   export let username
 
   // STATES
-  let isLoading = true
-  let error = null
-  let repos = null
+  let request
 
   $: {
-    octokit.repos.listForUser({
+    request = octokit.repos.listForUser({
       username,
       per_page: 100,
       type: 'all',
       sort: 'updated',
     })
-      .then(res => {
-        repos = res.data
-      })
-      .catch(err => {
-        error = err
-      })
-      .finally(() => {
-        isLoading = false
-      })
+      .then(res => res.data)
   }
 </script>
 
-{#if isLoading}
+{#await request}
   <progress class="loading-repos matter-progress-linear"></progress>
-{:else if error}
-  {@debug error}
-{:else}
+{:then repos}
   <strong class="repos-list__title">REPOS:</strong>
 
   <ul class="repos-list">
@@ -46,7 +34,9 @@
       </li>
     {/each}
   </ul>
-{/if}
+{:catch error}
+  {@debug error}
+{/await}
 
 <style>
   .loading-repos {

@@ -13,11 +13,13 @@
     navigate(`/view/${username}`)
   }
 
-  const debounceSearch = debounce(function searchUsers() {
-    if (!username) {
+  function handleUsernameChange () {
       searchResults = []
-      return
+    debounceSearch()
     }
+
+  const debounceSearch = debounce(function searchUsers() {
+    if (!username) return;
 
     octokit.search.users({
       q: username,
@@ -44,7 +46,7 @@
         type="text"
         name="gh-username"
         bind:value={username}
-        on:input={debounceSearch}
+        on:input={handleUsernameChange}
         placeholder=" "
         list="usernames"
         minlength="1"

@@ -7,25 +7,15 @@
   export let username // Received from svelte-routing
 
   // STATES
-  let isLoading = true
-  let error = null
-  let user = null
+  let userRequest
 
   $: {
-    isLoading = true
-
-    octokit.users.getByUsername({ username })
+    userRequest = octokit.users.getByUsername({ username })
       .then(res => {
-        const { data } = res
-        user = Object.assign(data, {
-          company: data.company?.replace(/\@(\w+)/gi, '<a href="https://github.com/$1" target="_blank">$1</a>')
-        })
-      })
-      .catch(err => {
-        error = err
-      })
-      .finally(() => {
-        isLoading = false
+        return {
+          ...res.data,
+          company: res.data.company?.replace(/\@(\w+)/gi, '<a href="https://github.com/$1" target="_blank">$1</a>')
+        }
       })
   }
 </script>
@@ -34,14 +24,11 @@
   <title>{username} - Svelte app</title>
 </svelte:head>
 
-{#if isLoading}
+{#await userRequest}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
   </div>
-{:else if error}
-  <Error message="Could not fetch the user. See the console for more details" />
-  {@debug error}
-{:else}
+{:then user}
   <div class="page page-profile">
     <div class="avatar__wrapper">
       <img class="avatar" src="{user.avatar_url}" alt="">
@@ -85,7 +72,10 @@
       rel="noopener noreferrer"
     >VIEW FULL PROFILE ON GITHUB</a>
   </div>
-{/if}
+{:catch error}
+  <Error message="Could not fetch the user. See the console for more details" />
+  {@debug error}
+{/await}
 
 <style>
   .page--loading progress {

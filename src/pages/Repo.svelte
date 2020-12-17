@@ -13,14 +13,11 @@
   export let username // Received from svelte-routing
 
   // STATES
-  let isLoading = true
-  let error = null
   let repo = null
   let readme = null
+  let requests
 
   $: {
-    isLoading = true
-
     const repoReq = octokit.repos.get({
       owner: username,
       repo: reponame,
@@ -41,16 +38,10 @@
         readme = marked(markdown)
       })
 
-    Promise.all([
+    requests = Promise.all([
       repoReq,
       readmeReq,
     ])
-      .finally(() => {
-        isLoading = false
-      })
-      .catch(err => {
-        error = err
-      })
   }
 </script>
 
@@ -60,14 +51,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
 </svelte:head>
 
-{#if isLoading}
+{#await requests}
   <div class="page page--loading">
     <progress class="matter-progress-circular"></progress>
   </div>
-{:else if error}
-  <Error message="Could not fetch this repo. See the console for more details" />
-  {@debug error}
-{:else}
+{:then}
   <div class="page page--repo">
     <div class="repo__header">
       <a class="repo__owner" href="/view/{repo.owner.login}" use:link>
@@ -108,7 +96,10 @@
       </div>
     {/await}
   </div>
-{/if}
+{:catch error}
+  <Error message="Could not fetch this repo. See the console for more details" />
+  {@debug error}
+{/await}
 
 <style>
   .page--repo {
