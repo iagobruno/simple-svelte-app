@@ -14,9 +14,9 @@
   }
 
   function handleUsernameChange () {
-      searchResults = []
+    searchResults = []
     debounceSearch()
-    }
+  }
 
   const debounceSearch = debounce(function searchUsers() {
     if (!username) return;
@@ -32,12 +32,12 @@
 </script>
 
 <svelte:head>
-  <title>Svelte app</title>
+  <title>GitHub Explorer</title>
 </svelte:head>
 
 <div class="page page--form">
   <img class="logo" src="/icons/svelte.svg" alt="Svelte Logo">
-  <h1 class="title">Hello World!</h1>
+  <h1 class="title">GitHub Explorer</h1>
   <p class="description">Enter a GitHub username to see a profile preview.</p>
 
   <form on:submit|preventDefault={handleSubmit}>
@@ -66,6 +66,8 @@
       disabled={!username.length}
     >VIEW PROFILE</button>
   </form>
+
+  <p class="page--home__footer">Built with <a href="https://svelte.dev/">Svelte</a> by <a href="https://github.com/iagobruno">Iago Bruno</a>.</p>
 </div>
 
 <style>
@@ -98,5 +100,10 @@
   }
   form button {
     margin-top: 24px;
+  }
+  .page--home__footer {
+    margin-top: 30px;
+    margin-bottom: -30px;
+    font-size: 14px;
   }
 </style>

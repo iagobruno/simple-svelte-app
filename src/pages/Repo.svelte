@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-  <title>{username}/{reponame} - Svelte app</title>
+  <title>{username}/{reponame} - GitHub Explorer</title>
   <!-- svelte-ignore component-name-lowercase -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
 </svelte:head>

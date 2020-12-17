@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-  <title>{username} - Svelte app</title>
+  <title>{username} - GitHub Explorer</title>
 </svelte:head>
 
 {#await userRequest}
