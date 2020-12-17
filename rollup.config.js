@@ -31,8 +31,8 @@ function serve () {
 export default {
   input: 'src/main.js',
   output: {
-    file: 'public/build/bundle.js',
-    format: 'iife',
+    dir: 'public/build',
+    format: 'es',
     name: 'app',
     sourcemap: isProduction,
   },

@@ -1,13 +1,14 @@
 <script>
   import ReposList from '../components/ReposList.svelte'
-  import Error from './Error.svelte'
+  import Error from '../components/Error.svelte'
   import octokit from '../common/octokit.js'
 
   // PROPS
-  export let username // Received from svelte-routing
+  export let params = {} // Received from svelte-spa-router
 
   // STATES
   let userRequest
+  $: username = params.username
 
   $: {
     userRequest = octokit.users.getByUsername({ username })

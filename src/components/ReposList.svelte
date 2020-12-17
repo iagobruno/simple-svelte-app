@@ -1,5 +1,5 @@
 <script>
-  import { link } from 'svelte-routing'
+  import { link } from 'svelte-spa-router'
   import StarsCounter from './StarsCounter.svelte'
   import octokit from '../common/octokit'
 

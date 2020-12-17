@@ -1,16 +1,15 @@
 <script>
-  import { link } from 'svelte-routing'
+  import { link } from 'svelte-spa-router'
   import StarsCounter from '../components/StarsCounter.svelte'
   import ForksCounter from '../components/ForksCounter.svelte'
   import IssuesCounter from '../components/IssuesCounter.svelte'
   import PullsCounter from '../components/PullsCounter.svelte'
-  import Error from './Error.svelte'
+  import Error from '../components/Error.svelte'
   import marked from 'marked'
   import octokit from '../common/octokit'
 
   // PROPS
-  export let reponame // Received from svelte-routing
-  export let username // Received from svelte-routing
+  export let params = {} // Received from svelte-spa-router
 
   // STATES
   let repo = null
@@ -19,16 +18,16 @@
 
   $: {
     const repoReq = octokit.repos.get({
-      owner: username,
-      repo: reponame,
+      owner: params.username,
+      repo: params.reponame,
     })
       .then(res => {
         repo = res.data
       })
 
     const readmeReq = octokit.repos.getReadme({
-      owner: username,
-      repo: reponame,
+      owner: params.username,
+      repo: params.reponame,
       headers: {
         'accept': 'application/vnd.github.VERSION.raw'
       }
@@ -46,7 +45,7 @@
 </script>
 
 <svelte:head>
-  <title>{username}/{reponame} - GitHub Explorer</title>
+  <title>{params.username}/{params.reponame} - GitHub Explorer</title>
   <!-- svelte-ignore component-name-lowercase -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
 </svelte:head>

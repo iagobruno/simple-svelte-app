@@ -1,5 +1,5 @@
 <script>
-  import { navigate  } from 'svelte-routing'
+  import * as router from 'svelte-spa-router'
   import debounce from 'lodash/debounce'
   import octokit from '../common/octokit'
 
@@ -10,7 +10,7 @@
   let searchResults = []
 
   function handleSubmit () {
-    navigate(`/view/${username}`)
+    router.push(`/view/${username}`)
   }
 
   function handleUsernameChange () {
