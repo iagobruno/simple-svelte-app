@@ -1,8 +1,6 @@
-# snowpack-svelte-demo
+# simple-svelte-app
 
-Forked from https://github.com/iagobruno/simple-svelte-app.
-
----
+[![Online Demo](https://img.shields.io/badge/Online-Demo-brightgreen.svg)](https://simple-svelte-app.vercel.app/)
 
 |      |      |      |
 | ---- | ---- | ---- |
@@ -11,13 +9,13 @@ Forked from https://github.com/iagobruno/simple-svelte-app.
 ## Getting started
 
 ```bash
-> git clone https://github.com/iagobruno/snowpack-svelte-demo
-> cd snowpack-svelte-demo
+> git clone https://github.com/iagobruno/simple-svelte-app
+> cd simple-svelte-app
 > yarn install
 > yarn run dev
 ```
 
-And then open [localhost:8080](http://http://localhost:8080) in your browser.
+And then open [localhost:5000](http://localhost:5000) in your browser.
 
 By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the sirv commands in package.json to include the option --host 0.0.0.0.
 
@@ -28,7 +26,7 @@ If you're using Visual Studio Code we recommend installing the official extensio
 To create an optimised version of the app:
 
 ```bash
-> yarn run build
+> npm run build
 ```
 
-You can run the newly built app with `yarn run start`. This uses sirv, which is included in your package.json's dependencies so that the app will work when you deploy to platforms like Heroku.
+You can run the newly built app with npm run start. This uses sirv, which is included in your package.json's dependencies so that the app will work when you deploy to platforms like Heroku.
