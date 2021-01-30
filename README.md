@@ -26,7 +26,7 @@ If you're using Visual Studio Code we recommend installing the official extensio
 To create an optimised version of the app:
 
 ```bash
-> npm run build
+> yarn run build
 ```
 
-You can run the newly built app with npm run start. This uses sirv, which is included in your package.json's dependencies so that the app will work when you deploy to platforms like Heroku.
+You can run the newly built app with `yarn run start`. This uses sirv, which is included in your package.json's dependencies so that the app will work when you deploy to platforms like Heroku.
