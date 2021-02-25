@@ -1,5 +1,6 @@
 <script>
   import ReposList from '../components/ReposList.svelte'
+  import Loading from '../components/Loading.svelte'
   import Error from '../components/Error.svelte'
   import octokit from '../common/octokit.js'
 
@@ -26,9 +27,7 @@
 </svelte:head>
 
 {#await userRequest}
-  <div class="page page--loading">
-    <progress class="matter-progress-circular"></progress>
-  </div>
+  <Loading />
 {:then user}
   <div class="page page-profile">
     <div class="avatar__wrapper">

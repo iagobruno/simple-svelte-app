@@ -4,6 +4,7 @@
   import ForksCounter from '../components/ForksCounter.svelte'
   import IssuesCounter from '../components/IssuesCounter.svelte'
   import PullsCounter from '../components/PullsCounter.svelte'
+  import Loading from '../components/Loading.svelte'
   import Error from '../components/Error.svelte'
   import marked from 'marked'
   import octokit from '../common/octokit'
@@ -51,9 +52,7 @@
 </svelte:head>
 
 {#await requests}
-  <div class="page page--loading">
-    <progress class="matter-progress-circular"></progress>
-  </div>
+  <Loading />
 {:then}
   <div class="page page--repo">
     <div class="repo__header">

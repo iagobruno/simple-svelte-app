@@ -1,5 +1,6 @@
 import { wrap } from 'svelte-spa-router/wrap'
 import NotFound from './pages/NotFound.svelte'
+import Loading from './components/Loading.svelte'
 
 export default {
   '/': lazyRoute(() => import('./pages/Home.svelte')),
@@ -11,5 +12,6 @@ export default {
 function lazyRoute (asyncComponent) {
   return wrap({
     asyncComponent,
+    loadingComponent: Loading
   })
 }
